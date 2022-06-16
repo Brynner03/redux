@@ -17,13 +17,16 @@ const counterSlice = createSlice({
             state.counter--
         },
         increase(state, action) {
-            state.counter = state.counter + action.amount
+            state.counter = state.counter + action.payload // Access the payload from our counter
         },
         toggleCounter(state) {
             state.showCounter = !state.showCounter
         }
     }
 })
+
+// Our methods from our counterSlice
+
 // ConfigureStore makes merging multiple reducers into one reducer easier
 const store = configureStore({
     // Setup property name of our store. This can create a map of our reducers.
@@ -31,4 +34,6 @@ const store = configureStore({
     reducer: counterSlice.reducer 
 })
 
+// Export our actions.
+export const counterActions = counterSlice.actions
 export default store
