@@ -6,6 +6,7 @@ const counterReducer = (state = initialState , action) => {
     if (action.type === 'increment') {
         return {
             // NEVER MUTATE EXISTING STATE, ALWAYS OVERRIDE IT && RETURN NEW STATE
+            // This can lead to bugs, and can have unwanted side-effects in bigger applications.
             counter: state.counter + 1,
             //  Always update every state when updating one state!
             showCounter: state.showCounter
@@ -16,7 +17,6 @@ const counterReducer = (state = initialState , action) => {
         return {
             counter: state.counter + action.amount,
             showCounter: state.showCounter
-
         }
     }
 
@@ -24,7 +24,6 @@ const counterReducer = (state = initialState , action) => {
         return {
             counter: state.counter - 1,
             showCounter: state.showCounter
-
         }
     }
 
@@ -32,7 +31,6 @@ const counterReducer = (state = initialState , action) => {
         return {
             counter: state.counter - action.amount,
             showCounter: state.showCounter
-
         }
     }
 
