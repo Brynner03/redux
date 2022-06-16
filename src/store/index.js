@@ -1,9 +1,11 @@
 import { createStore } from 'redux'
 
+export const INCREMENT = 'increment'
+
 const initialState = { counter: 0, showCounter: true}
 
 const counterReducer = (state = initialState , action) => {
-    if (action.type === 'increment') {
+    if (action.type === INCREMENT) {
         return {
             // NEVER MUTATE EXISTING STATE, ALWAYS OVERRIDE IT && RETURN NEW STATE
             // This can lead to bugs, and can have unwanted side-effects in bigger applications.
