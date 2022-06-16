@@ -1,9 +1,15 @@
+import { useSelector } from 'react-redux';
+
 import classes from './Header.module.css';
 
 const Header = () => {
+  const isAuth = useSelector(state => state.auth.isAuthenticated)
+
   return (
     <header className={classes.header}>
       <h1>Redux Auth</h1>
+      {isAuth &&
+      
       <nav>
         <ul>
           <li>
@@ -17,6 +23,7 @@ const Header = () => {
           </li>
         </ul>
       </nav>
+}
     </header>
   );
 };
