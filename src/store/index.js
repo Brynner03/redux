@@ -1,9 +1,8 @@
-import { createStore } from 'redux'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, configureStore } from '@reduxjs/toolkit'
 
 const initialState = { counter: 0, showCounter: true}
 
-createSlice({
+const counterSlice = createSlice({
     // Preparing a slice of ouy Global state
     name: 'counter', // setup a name
     initialState,
@@ -14,55 +13,22 @@ createSlice({
             // Now we can mutate the state because we can't accidentally manipulate existing state. Redux toolkit uses another package that will clone existing state, create a new state object, keep all the state that we're not editing, and override the state that we ARE editing!
             state.counter++
         },
-        decrement(state) {},
-        increase(state) {},
-        toggleCounter(state) {}
+        decrement(state) {
+            state.counter--
+        },
+        increase(state, action) {
+            state.counter = state.counter + action.amount
+        },
+        toggleCounter(state) {
+            state.showCounter = !state.showCounter
+        }
     }
 })
-
-const counterReducer = (state = initialState , action) => {
-    if (action.type === 'increment') {
-        return {
-            // NEVER MUTATE EXISTING STATE, ALWAYS OVERRIDE IT && RETURN NEW STATE
-            // This can lead to bugs, and can have unwanted side-effects in bigger applications.
-            counter: state.counter + 1,
-            //  Always update every state when updating one state!
-            showCounter: state.showCounter
-        }
-    }
-
-    if (action.type === 'increase') {
-        return {
-            counter: state.counter + action.amount,
-            showCounter: state.showCounter
-        }
-    }
-
-    if (action.type === 'decrement') {
-        return {
-            counter: state.counter - 1,
-            showCounter: state.showCounter
-        }
-    }
-
-    if (action.type === 'decrease') {
-        return {
-            counter: state.counter - action.amount,
-            showCounter: state.showCounter
-        }
-    }
-
-    if (action.type === 'toggle') {
-        return {
-            showCounter: !state.showCounter,
-            counter: state.counter
-        }
-    }
-
-    return state
-
-}
-
-const store = createStore(counterReducer)
+// ConfigureStore makes merging multiple reducers into one reducer easier
+const store = configureStore({
+    // Setup property name of our store. This can create a map of our reducers.
+    // configureStore will merge all of them together.
+    reducer: counterSlice.reducer 
+})
 
 export default store
