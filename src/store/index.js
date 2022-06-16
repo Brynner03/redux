@@ -1,11 +1,11 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit'
 
-const initialState = { counter: 0, showCounter: true}
+const initialCounterState = { counter: 0, showCounter: true}
 
 const counterSlice = createSlice({
     // Preparing a slice of ouy Global state
     name: 'counter', // setup a name
-    initialState,
+    initialState: initialCounterState,
     // A map of all the reducers this slice needs
     reducers: {
         // Don't need to write if checks anymore. It will automatically check the state
@@ -25,15 +25,32 @@ const counterSlice = createSlice({
     }
 })
 
-// Our methods from our counterSlice
+const initialAuthState = {
+    isAuthenticated: false
+}
+
+const authSlice = createSlice({
+    name: 'authentication',
+    initialState: initialAuthState,
+    reducers: {
+        login(state) {
+            state.isAuthenticated = true
+        },
+        logout(state) {
+            state.isAuthenticated = false
+        }
+    }
+})
 
 // ConfigureStore makes merging multiple reducers into one reducer easier
+// Only one root reducer, and one configureStore
 const store = configureStore({
     // Setup property name of our store. This can create a map of our reducers.
     // configureStore will merge all of them together.
-    reducer: counterSlice.reducer 
+    reducer: { counter: counterSlice.reducer, auth: authSlice.reducer },
 })
 
 // Export our actions.
 export const counterActions = counterSlice.actions
+export const authActions = authSlice.actions
 export default store
